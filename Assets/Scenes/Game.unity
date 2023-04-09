@@ -331,6 +331,12 @@ MonoBehaviour:
   - {fileID: 2112955384943321240, guid: 929132b1acf214dbdb21a0aa0489b4b0, type: 3}
   - {fileID: 6978714305326910569, guid: a4b96431f9e28e83fa4575d9638d60b0, type: 3}
   - {fileID: 4729588848878355634, guid: 1624e7f8e0a8dbc17a2a3861f90a7a4f, type: 3}
+  randomEnemies:
+  - {fileID: 3312348385257483242, guid: 950451ec8d151e6aa9908ebe04968ca0, type: 3}
+  - {fileID: 8093548830266807595, guid: 01ba051b521f174d783a262f783766e0, type: 3}
+  - {fileID: 512221205257425071, guid: 3af52e179f9b4093aaa15da97cc955ce, type: 3}
+  - {fileID: 8394848080866618975, guid: e944e102b0a761044aa3840a98c57289, type: 3}
+  - {fileID: 8728338842502774299, guid: 5733a0196bfc25395b30df15a32ffb58, type: 3}
   floorPrefab: {fileID: 4168814111585453138, guid: 92bca2b567ea513ac9704b5fedb1b67c, type: 3}
   wallPrefab: {fileID: 5495375236635996136, guid: f10b5df1113671926948e80d30da563b, type: 3}
   tilePrefab: {fileID: 7791546164925355741, guid: 164cdc1d1763c89e48b70b76e8acc63d, type: 3}
@@ -341,6 +347,7 @@ MonoBehaviour:
   maxY: 0
   totalFloorCount: 50
   itemSpawnPercent: 20
+  enemySpawnPercent: 10
 --- !u!1 &1453345594
 GameObject:
   m_ObjectHideFlags: 0

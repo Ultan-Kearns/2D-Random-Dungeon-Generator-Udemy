@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1766,7 +1766,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       monsters_3_24: 145020419
-      monsters_3_46: 1568228872
+      monsters_3_36: 364289397
       monsters_3_63: -2008015489
       monsters_3_35: -195624037
       monsters_3_32: 1180673623
@@ -1842,7 +1842,7 @@ TextureImporter:
       monsters_3_28: -374533874
       monsters_3_41: -1154201254
       monsters_3_17: -1371740701
-      monsters_3_36: 364289397
+      monsters_3_46: 1568228872
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
