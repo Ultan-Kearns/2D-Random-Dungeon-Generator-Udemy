@@ -13,10 +13,10 @@ public class DungeonManager : MonoBehaviour
     public GameObject floorPrefab,wallPrefab,tilePrefab,exitPrefab;
 
     public float minX, maxX,minY,maxY;
-    [Range(50,5000)]public int totalFloorCount;
-    [Range(0,100)]public int itemSpawnPercent;
-    [Range(0,100)]public int enemySpawnPercent;
-
+    [Range(50,5000)] public int totalFloorCount;
+    [Range(0,100)] public int itemSpawnPercent;
+    [Range(0,100)] public int enemySpawnPercent;
+    [Range(0,100)] public int windingHallPercent  
     public DungeonType dungeonType;
 
     List<Vector3> floorList = new List<Vector3>();
@@ -84,7 +84,7 @@ public class DungeonManager : MonoBehaviour
             currentPos = TakeAHike(currentPos);
         }
         int roll = Random.Range(0,100);
-        if(roll < 50)
+        if(roll < windingHallPercent)
         {
             RandomRoom(currentPos);
         }
