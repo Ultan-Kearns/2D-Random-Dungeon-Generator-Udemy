@@ -345,9 +345,10 @@ MonoBehaviour:
   maxX: 0
   minY: 0
   maxY: 0
-  totalFloorCount: 50
+  totalFloorCount: 2445
   itemSpawnPercent: 20
   enemySpawnPercent: 10
+  dungeonType: 2
 --- !u!1 &1453345594
 GameObject:
   m_ObjectHideFlags: 0

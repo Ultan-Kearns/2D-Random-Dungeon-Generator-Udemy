@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+public enum DungeonType{Caverns, Rooms, Winding};
+
 public class DungeonManager : MonoBehaviour
 {
     public GameObject[] randomItems;
@@ -14,12 +17,24 @@ public class DungeonManager : MonoBehaviour
     [Range(0,100)]public int itemSpawnPercent;
     [Range(0,100)]public int enemySpawnPercent;
 
+    public DungeonType dungeonType;
+
     List<Vector3> floorList = new List<Vector3>();
     LayerMask floorMask,wallMask;
     void Start(){
         floorMask = LayerMask.GetMask("Floor");
         wallMask = LayerMask.GetMask("Wall");
-        RandomWalker();
+        switch(dungeonType){
+            case DungeonType.Caverns:
+                RandomWalker();
+                break;
+            case DungeonType.Rooms:
+                RoomWalker();
+                break;
+            case DungeonType.Winding:
+                WindingWalker();
+            break;
+        }
     }
 
     void Update()
@@ -37,46 +52,116 @@ public class DungeonManager : MonoBehaviour
         //set floor tile at current pos
         while(floorList.Count < totalFloorCount)
         {
-            switch (Random.Range(1,5))
-            {
-                case 1:
-                    currentPos += Vector3.up;
-                    break;
-                case 2: 
-                    currentPos += Vector3.right;
-                    break;
-                case 3:
-                    currentPos += Vector3.down;
-                    break;
-                case 4:
-                    currentPos += Vector3.left;
-                    break;
-            }
-            bool inFloorList = false;
-            for(int i = 0; i < floorList.Count; i++)
-            {
-                if(Vector3.Equals(currentPos, floorList[i]))
-                {
-                    inFloorList = true;
-                    break;
-                }
-            }
-            if(!inFloorList)
+            currentPos += RandomDirection();
+            if(!InFloorList(currentPos))
             {
                 floorList.Add(currentPos);
             }
         }
+        StartCoroutine(DelayProgress());
+    }
+
+    void RoomWalker()
+    {
+        Vector3 currentPos = Vector3.zero;
+        floorList.Add(currentPos);
+        //set floor tile at current pos
+        while(floorList.Count < totalFloorCount)
+        {
+            currentPos = TakeAHike(currentPos);
+            RandomRoom(currentPos);
+        }
+        StartCoroutine(DelayProgress());
+    }
+
+ void WindingWalker()
+    {
+        Vector3 currentPos = Vector3.zero;
+        floorList.Add(currentPos);
+        //set floor tile at current pos
+        while(floorList.Count < totalFloorCount)
+        {
+            currentPos = TakeAHike(currentPos);
+        }
+        int roll = Random.Range(0,100);
+        if(roll < 50)
+        {
+            RandomRoom(currentPos);
+        }
+        StartCoroutine(DelayProgress());
+    }
+    
+    Vector3 TakeAHike(Vector3 myPos)
+    {
+
+        Vector3 walkDir = RandomDirection();
+        int walkLength = Random.Range(9,18);
+        for(int i = 0; i < walkLength; i++)
+        {
+            if(!InFloorList(myPos + walkDir))
+            {
+                floorList.Add(myPos + walkDir);
+            }
+            myPos += walkDir;
+        }
+        return myPos;
+    }
+
+    void RandomRoom(Vector3 myPos)
+    {
+        //Random room at end of corridor
+        int width = Random.Range(1, 5);
+        int height = Random.Range(1, 5);
+        for(int w = -width; w <= width; w++)
+        {
+            for(int h = -height; h <= height; h++)
+            {
+                Vector3 offset = new Vector3(w,h,0);
+                if(!InFloorList(myPos + offset))
+                {
+                    floorList.Add(myPos + offset);
+                }
+
+            }
+        }
+    }
+
+    bool InFloorList(Vector3 myPos)
+    {
+        for(int i = 0; i < floorList.Count; i++)
+        {
+            if(Vector3.Equals(myPos, floorList[i]))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    Vector3 RandomDirection()
+    {
+        switch (Random.Range(1,5))
+        {
+            case 1:
+                return Vector3.up;
+            case 2: 
+                return Vector3.right;
+            case 3:
+                return Vector3.down;
+            case 4:
+                return Vector3.left; 
+        }
+        return Vector3.zero;
+    }
+
+    IEnumerator DelayProgress()
+    {
         for(int i = 0; i < floorList.Count; i++)
         {
             GameObject goTile = Instantiate(tilePrefab,floorList[i],Quaternion.identity) as GameObject;
             goTile.name = tilePrefab.name;
             goTile.transform.SetParent(transform);
         }
-        StartCoroutine(DelayProgress());
-    }
-
-    IEnumerator DelayProgress()
-    {
         while(FindObjectsOfType<TileSpawner>().Length > 0)
         {
             yield return null;
